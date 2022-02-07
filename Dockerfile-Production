@@ -1,0 +1,16 @@
+FROM node:14.17.3 as builder
+ADD package.json package-lock.json /build/
+WORKDIR /build
+RUN npm install
+ADD . /build
+RUN npm run ng build --prod  --progress false --aot --base-href=/
+#RUN npm run ng build --progress false --base-href=/
+RUN ls -Rl dist
+RUN pwd
+
+FROM nginx:1.17.6-alpine
+
+COPY --from=builder /build/dist/oidc-autologin  /usr/share/nginx/html
+RUN ls -l usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/
+RUN ls -l /etc/nginx/conf.d/

@@ -1,0 +1,13 @@
+<div><h3>Welcome to home Route</h3></div>
+<hr>
+<div  *ngIf="(userData$ | async) as userData">
+  <div><h4> Email    : {{ email }} </h4></div>
+  <div><h4> configId :  {{ configId }}</h4> </div>
+</div>
+
+<hr>
+<h3>JSON Data </h3>
+
+Is Authenticated: {{ isAuthenticated }}
+<pre>{{ userData$ | async | json }}</pre>
+
