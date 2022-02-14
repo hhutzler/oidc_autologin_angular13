@@ -34,6 +34,8 @@ export class NavigationComponent implements OnInit {
 
   logout() {
     console.log('NavigationComponent::logout() ');
+    // In case you have problems  logoffAndRevokeTokens() - try this
+    // this.oidcSecurityService.logoff();
     this.oidcSecurityService.logoffAndRevokeTokens()
       .subscribe((result) => console.log('NavigationComponent::logout()->result) :', result));
   }

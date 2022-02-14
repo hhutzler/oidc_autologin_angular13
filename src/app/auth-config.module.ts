@@ -5,15 +5,17 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
   imports: [
     AuthModule.forRoot({
       config: {
-        postLoginRoute: '/home',
+        postLoginRoute: 'home',
         forbiddenRoute: '/forbidden',
         unauthorizedRoute: '/unauthorized',
         logLevel: LogLevel.Debug,
-        historyCleanupOff: true,
-        authority: 'https://kube-master.informatik.fh-nuernberg.de:8087/auth/realms/rzldap',
+           // Do not change historyCleanupOff to true : https://github.com/damienbod/angular-auth-oidc-client/issues/1318
+        historyCleanupOff: false,
+        // authority: 'https://kube-master.informatik.fh-nuernberg.de:8087/auth/realms/rzldap',
+        authority: 'http://localhost:8280/auth/realms/RBAC',
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        clientId: 'rzldap-cli',
+        clientId: 'angular-frontend',
         scope: 'openid profile email offline_access',
         responseType: 'code',
         silentRenew: true,
@@ -22,6 +24,8 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
         renewTimeBeforeTokenExpiresInSeconds: 10,
         // startCheckSession: true,
         ignoreNonceAfterRefresh: true,
+        // routes that get added a bearer token by  HTTP_INTERCEPTORS provided by angular-auth-oidc-client'
+        secureRoutes: ['http://localhost:8080']
       },
     }),
   ],
